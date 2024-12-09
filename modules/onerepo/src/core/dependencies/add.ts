@@ -173,7 +173,7 @@ function getVersions(input: Array<string>, graph: Graph, tree: Array<Workspace>,
 			const local = graph.getByName(name);
 			version = local.version || 'workspace:^';
 			isInternal = true;
-		} catch (e) {
+		} catch {
 			// no-op
 		}
 
@@ -274,7 +274,7 @@ async function prompt(requested: Requested, mode: Args['mode'], graph: Graph, st
 			? version!
 			: /^\d/.test(toInstall!)
 				? `${mode === 'loose' ? '^' : ''}${coerce(toInstall)!.version}`
-				: coerce(toInstall)?.version ?? toInstall!;
+				: (coerce(toInstall)?.version ?? toInstall!);
 
 		choices[name] = toInstall;
 	}

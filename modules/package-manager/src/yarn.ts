@@ -42,7 +42,7 @@ export const Yarn = {
 			});
 
 			return JSON.parse(data) as NpmInfo;
-		} catch (e) {
+		} catch {
 			return null;
 		}
 	},
@@ -67,7 +67,7 @@ export const Yarn = {
 				runDry: true,
 			});
 			return true;
-		} catch (e) {
+		} catch {
 			return false;
 		}
 	},
@@ -83,7 +83,7 @@ export const Yarn = {
 		await batch(
 			workspaces.map((ws) => {
 				const pre = prerelease(ws.version!);
-				const thisTag = pre && pre[0] ? `${pre[0]}` : tag ?? 'latest';
+				const thisTag = pre && pre[0] ? `${pre[0]}` : (tag ?? 'latest');
 				return {
 					name: `Publish ${ws.name}`,
 					cmd,
@@ -119,7 +119,7 @@ export const Yarn = {
 				if (ws && ws.version && versions.includes(ws.version)) {
 					publishable.delete(ws);
 				}
-			} catch (e) {
+			} catch {
 				// no catch
 			}
 		}
